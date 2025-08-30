@@ -1,0 +1,97 @@
+Last login: Fri Aug 29 22:42:51 on ttys002
+sphurtibandappasasture@SPHURTIs-MacBook-Air ~ % cd ~/StudentManagementSQL
+sphurtibandappasasture@SPHURTIs-MacBook-Air StudentManagementSQL % sqlite3 StudentManagement.db
+SQLite version 3.43.2 2023-10-10 13:08:14
+Enter ".help" for usage hints.
+sqlite> .headers on
+sqlite> .mode column
+sqlite> DROP TABLE IF EXISTS Students;
+sqlite> 
+sqlite> CREATE TABLE Students (
+(x1...>     StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
+(x1...>     Name VARCHAR(50),
+(x1...>     Gender VARCHAR(1),
+(x1...>     Age INT,
+(x1...>     Grade VARCHAR(10),
+(x1...>     MathScore INT,
+(x1...>     ScienceScore INT,
+(x1...>     EnglishScore INT
+(x1...> );
+sqlite> INSERT INTO Students (Name, Gender, Age, Grade, MathScore, ScienceScore, EnglishScore) VALUES
+   ...> ('Aarav Sharma', 'M', 15, 'A', 92, 85, 88),
+   ...> ('Isha Patel', 'F', 14, 'B', 78, 82, 90),
+   ...> ('Rohan Verma', 'M', 16, 'A', 95, 91, 87),
+   ...> ('Sneha Gupta', 'F', 15, 'C', 65, 70, 72),
+   ...> ('Karan Mehta', 'M', 14, 'B', 80, 76, 85),
+   ...> ('Ananya Desai', 'F', 16, 'A', 89, 92, 94),
+   ...> ('Vikram Nair', 'M', 15, 'C', 55, 60, 58),
+   ...> ('Priya Iyer', 'F', 14, 'B', 84, 88, 79),
+   ...> ('Aditya Rao', 'M', 16, 'A', 90, 93, 85),
+   ...> ('Neha Joshi', 'F', 15, 'C', 72, 68, 74);
+sqlite> SELECT * FROM Students;
+StudentID  Name          Gender  Age  Grade  MathScore  ScienceScore  EnglishScore
+---------  ------------  ------  ---  -----  ---------  ------------  ------------
+1          Aarav Sharma  M       15   A      92         85            88          
+2          Isha Patel    F       14   B      78         82            90          
+3          Rohan Verma   M       16   A      95         91            87          
+4          Sneha Gupta   F       15   C      65         70            72          
+5          Karan Mehta   M       14   B      80         76            85          
+6          Ananya Desai  F       16   A      89         92            94          
+7          Vikram Nair   M       15   C      55         60            58          
+8          Priya Iyer    F       14   B      84         88            79          
+9          Aditya Rao    M       16   A      90         93            85          
+10         Neha Joshi    F       15   C      72         68            74          
+sqlite> SELECT 
+   ...>     ROUND(AVG(MathScore),2) AS AvgMath,
+   ...>     ROUND(AVG(ScienceScore),2) AS AvgScience,
+   ...>     ROUND(AVG(EnglishScore),2) AS AvgEnglish
+   ...> FROM Students;
+AvgMath  AvgScience  AvgEnglish
+-------  ----------  ----------
+80.0     80.5        81.2      
+sqlite> SELECT Name, (MathScore + ScienceScore + EnglishScore) AS TotalScore
+   ...> FROM Students
+   ...> ORDER BY TotalScore DESC
+   ...> LIMIT 1;
+Name          TotalScore
+------------  ----------
+Ananya Desai  275       
+sqlite> SELECT Grade, COUNT(*) AS StudentCount
+   ...> FROM Students
+   ...> GROUP BY Grade;
+Grade  StudentCount
+-----  ------------
+A      4           
+B      3           
+C      3           
+sqlite> SELECT Gender,
+   ...>        ROUND(AVG(MathScore),2) AS AvgMath,
+   ...>        ROUND(AVG(ScienceScore),2) AS AvgScience,
+   ...>        ROUND(AVG(EnglishScore),2) AS AvgEnglish
+   ...> FROM Students
+   ...> GROUP BY Gender;
+Gender  AvgMath  AvgScience  AvgEnglish
+------  -------  ----------  ----------
+F       77.6     80.0        81.8      
+M       82.4     81.0        80.6      
+sqlite> SELECT StudentID, Name, MathScore
+   ...> FROM Students
+   ...> WHERE MathScore > 80
+   ...> ORDER BY MathScore DESC;
+StudentID  Name          MathScore
+---------  ------------  ---------
+3          Rohan Verma   95       
+1          Aarav Sharma  92       
+9          Aditya Rao    90       
+6          Ananya Desai  89       
+8          Priya Iyer    84       
+sqlite> UPDATE Students
+   ...> SET Grade = 'A'
+   ...> WHERE StudentID = 2;
+sqlite> 
+sqlite> SELECT * FROM Students WHERE StudentID = 2;
+StudentID  Name        Gender  Age  Grade  MathScore  ScienceScore  EnglishScore
+---------  ----------  ------  ---  -----  ---------  ------------  ------------
+2          Isha Patel  F       14   A      78         82            90          
+sqlite> .exit
+sphurtibandappasasture@SPHURTIs-MacBook-sphurtibandappasasture@SPHURTIs-MacBook-sphurtibandappasasture@SPHURTIs-MacBook-Air StudentManagementSQL % 
